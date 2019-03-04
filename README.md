@@ -15,6 +15,8 @@ Used as our tileserver.
 
 Then all the files are served from `var/www/html`
 
+Copy of [nginx config](https://github.com/npct/pct-lsoa-vis/blob/master/config/nginx.config)
+
 ## SSL
 
 Basic copy of [digitalocean](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-debian-8)
