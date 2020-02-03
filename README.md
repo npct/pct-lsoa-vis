@@ -15,23 +15,23 @@ Used as our tileserver.
 
 Then all the files are served from `var/www/html`
 
-Copy of [nginx config](https://github.com/npct/pct-lsoa-vis/blob/master/config/nginx.config)
+Copy of [nginx config](https://github.com/npct/pct-lsoa-vis/blob/master/config/nginx.config) to `/etc/nginx/sites-enabled/default`
 
 ## SSL
 
-Basic copy of [digitalocean](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-debian-8)
+Basic copy of [EFF certbot guide](https://certbot.eff.org/lets-encrypt/debianjessie-nginx)
 
 ```bash
-echo 'deb http://ftp.debian.org/debian jessie-backports main' | tee /etc/apt/sources.list.d/backports.list
-apt-get update
-apt-get install certbot -t jessie-backports
-certbot certonly -a webroot --webroot-path=/var/www/html -d npttile.vs.mythic-beasts.com
-nginx -t # is the nginx config valid
-systemctl restart nginx # check we are using the correct nginx config
+
+wget https://dl.eff.org/certbot-auto
+mv certbot-auto /usr/local/bin/certbot-auto
+chown root /usr/local/bin/certbot-auto
+chmod 0755 /usr/local/bin/certbot-auto
+/usr/local/bin/certbot-auto --nginx
 ```
 
 The crontab is:
 
 ```
-11 3 * * * /usr/bin/certbot renew --noninteractive --renew-hook "/bin/systemctl reload nginx" >> /var/log/le-renew.log
+19 1 * * * /usr/local/bin/certbot-auto renew >> /var/log/le-renew.log
 ```
